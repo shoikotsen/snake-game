@@ -22,7 +22,7 @@ function startGame() {
         { x: 260, y: 300, angle: 0 }
     ];
     mouse = getRandomMousePosition();
-    direction = "RIGHT";
+    direction = "RIGHT"; // Default so game starts moving
     score = 0;
     isGameOver = false;
     clearInterval(gameInterval);
