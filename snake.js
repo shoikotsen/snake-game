@@ -56,13 +56,24 @@ function updateGame() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     snake.forEach((seg, idx) => {
-        if (idx === 0) {
-            ctx.drawImage(snakeHeadImg, seg.x, seg.y, 20, 20);
-        } else {
-            ctx.drawImage(snakeBodyImg, seg.x, seg.y, 20, 20);
+        try {
+            if (idx === 0) {
+                ctx.drawImage(snakeHeadImg, seg.x, seg.y, 20, 20);
+            } else {
+                ctx.drawImage(snakeBodyImg, seg.x, seg.y, 20, 20);
+            }
+        } catch (e) {
+            // fallback color if images fail
+            ctx.fillStyle = idx === 0 ? "#4CAF50" : "#8BC34A";
+            ctx.fillRect(seg.x, seg.y, 20, 20);
         }
     });
-    ctx.drawImage(mouseImg, food.x, food.y, 20, 20);
+    try {
+        ctx.drawImage(mouseImg, food.x, food.y, 20, 20);
+    } catch (e) {
+        ctx.fillStyle = "#FF5252";
+        ctx.fillRect(food.x, food.y, 20, 20);
+    }
 }
 
 function endGame() {
