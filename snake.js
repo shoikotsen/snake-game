@@ -1,22 +1,25 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-const box = 20; // Size of grid box
+const box = 20;
 let snake;
-let fruit;
+let mouse;
 let score;
 let direction;
 let gameInterval;
 
+const eatSound = document.getElementById("eatSound");
+const gameOverSound = document.getElementById("gameOverSound");
+
 function startGame() {
     snake = [{ x: 9 * box, y: 10 * box }];
-    fruit = {
+    mouse = {
         x: Math.floor(Math.random() * 20) * box,
         y: Math.floor(Math.random() * 20) * box,
     };
     score = 0;
     direction = null;
     clearInterval(gameInterval);
-    gameInterval = setInterval(draw, 100);
+    gameInterval = setInterval(draw, 150);
 }
 
 document.addEventListener("keydown", changeDirection);
@@ -30,18 +33,20 @@ function changeDirection(event) {
 }
 
 function draw() {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Draw snake
     for (let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = i == 0 ? "lime" : "white";
+        ctx.fillStyle = i === 0 ? "#00ff00" : "#66ff66"; // Head vs Body
         ctx.fillRect(snake[i].x, snake[i].y, box, box);
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "#003300";
         ctx.strokeRect(snake[i].x, snake[i].y, box, box);
     }
 
-    ctx.fillStyle = "red";
-    ctx.fillRect(fruit.x, fruit.y, box, box);
+    // Draw mouse (food)
+    ctx.font = "20px Arial";
+    ctx.fillText("🐭", mouse.x, mouse.y + box);
 
     let headX = snake[0].x;
     let headY = snake[0].y;
@@ -51,9 +56,22 @@ function draw() {
     if (direction == "RIGHT") headX += box;
     if (direction == "DOWN") headY += box;
 
-    if (headX == fruit.x && headY == fruit.y) {
+    // Check wall collision
+    if (headX < 0 || headY < 0 || headX >= canvas.width || headY >= canvas.height) {
+        gameOver();
+        return;
+    }
+
+    // Check self-collision
+    if (collision({ x: headX, y: headY }, snake)) {
+        gameOver();
+        return;
+    }
+
+    if (headX == mouse.x && headY == mouse.y) {
         score++;
-        fruit = {
+        eatSound.play();
+        mouse = {
             x: Math.floor(Math.random() * 20) * box,
             y: Math.floor(Math.random() * 20) * box,
         };
@@ -62,18 +80,8 @@ function draw() {
     }
 
     let newHead = { x: headX, y: headY };
-
-    if (
-        headX < 0 || headY < 0 ||
-        headX >= canvas.width || headY >= canvas.height ||
-        collision(newHead, snake)
-    ) {
-        clearInterval(gameInterval);
-        alert("Game Over! Your score: " + score);
-        return;
-    }
-
     snake.unshift(newHead);
+
     document.getElementById("score").innerText = score;
 }
 
@@ -84,4 +92,12 @@ function collision(head, array) {
         }
     }
     return false;
+}
+
+function gameOver() {
+    clearInterval(gameInterval);
+    gameOverSound.play();
+    setTimeout(() => {
+        alert("💥 Game Over! Your Score: " + score);
+    }, 100);
 }

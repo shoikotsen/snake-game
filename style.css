@@ -1,38 +1,47 @@
 body {
-    background-color: #f0f8ff;
+    background-color: #1e1e1e;
+    color: #fff;
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
 
 h1 {
-    color: #333;
     margin-top: 20px;
+    font-size: 2.5rem;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
 }
 
 #gameCanvas {
     background-color: #000;
-    border: 5px solid #333;
+    border: 6px solid #00ff00;
     display: block;
     margin: 20px auto;
+    border-radius: 10px;
 }
 
 #scoreBoard {
-    margin-top: 10px;
-    color: #333;
+    margin-top: 15px;
+}
+
+#scoreBoard h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4cafef;
-    color: #fff;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    background-color: #00ff00;
+    color: #000;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #2196f3;
+    background-color: #00cc00;
 }

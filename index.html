@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Classic Snake Game 🐍</h1>
+    <h1>🐍 Snake Game</h1>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
     <div id="scoreBoard">
-        <p>Score: <span id="score">0</span></p>
-        <button onclick="startGame()">Start Game</button>
+        <h2>Score: <span id="score">0</span></h2>
+        <button id="startBtn" onclick="startGame()">▶ Start Game</button>
     </div>
+    <audio id="eatSound" src="https://freesound.org/data/previews/404/404415_5121236-lq.mp3"></audio>
+    <audio id="gameOverSound" src="https://freesound.org/data/previews/178/178186_2859975-lq.mp3"></audio>
     <script src="snake.js"></script>
 </body>
 </html>
