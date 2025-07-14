@@ -94,7 +94,7 @@ document.addEventListener("keydown", e => {
 });
 
 function getRandomFoodPosition() {
-    const x = Math.floor(Math.random() * 40) * 40;
-    const y = Math.floor(Math.random() * 40) * 40;
+    const x = Math.floor(Math.random() * (canvas.width / 40)) * 40;
+    const y = Math.floor(Math.random() * (canvas.height / 40)) * 40;
     return { x, y };
 }
