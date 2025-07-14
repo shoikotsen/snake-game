@@ -27,10 +27,10 @@ function updateGame() {
     if (isGameOver) return;
 
     let head = { ...snake[0] };
-    if (direction === "UP") head.y -= 20;
-    if (direction === "DOWN") head.y += 20;
-    if (direction === "LEFT") head.x -= 20;
-    if (direction === "RIGHT") head.x += 20;
+    if (direction === "UP") head.y -= 40;
+    if (direction === "DOWN") head.y += 40;
+    if (direction === "LEFT") head.x -= 40;
+    if (direction === "RIGHT") head.x += 40;
 
     snake.unshift(head);
 
@@ -58,21 +58,21 @@ function draw() {
     snake.forEach((seg, idx) => {
         try {
             if (idx === 0) {
-                ctx.drawImage(snakeHeadImg, seg.x, seg.y, 20, 20);
+                ctx.drawImage(snakeHeadImg, seg.x, seg.y, 40, 40);
             } else {
-                ctx.drawImage(snakeBodyImg, seg.x, seg.y, 20, 20);
+                ctx.drawImage(snakeBodyImg, seg.x, seg.y, 40, 40);
             }
         } catch (e) {
             // fallback color if images fail
             ctx.fillStyle = idx === 0 ? "#4CAF50" : "#8BC34A";
-            ctx.fillRect(seg.x, seg.y, 20, 20);
+            ctx.fillRect(seg.x, seg.y, 40, 40);
         }
     });
     try {
-        ctx.drawImage(mouseImg, food.x, food.y, 20, 20);
+        ctx.drawImage(mouseImg, food.x, food.y, 40, 40);
     } catch (e) {
         ctx.fillStyle = "#FF5252";
-        ctx.fillRect(food.x, food.y, 20, 20);
+        ctx.fillRect(food.x, food.y, 40, 40);
     }
 }
 
@@ -94,7 +94,7 @@ document.addEventListener("keydown", e => {
 });
 
 function getRandomFoodPosition() {
-    const x = Math.floor(Math.random() * 30) * 20;
-    const y = Math.floor(Math.random() * 30) * 20;
+    const x = Math.floor(Math.random() * 15) * 40;
+    const y = Math.floor(Math.random() * 15) * 40;
     return { x, y };
 }
