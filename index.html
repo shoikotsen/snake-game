@@ -7,13 +7,18 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>🐍 Realistic Snake Game</h1>
-    <canvas id="gameCanvas" width="600" height="600"></canvas>
-    <div id="controls">
-        <button id="startBtn" onclick="startGame()">▶ Start Game</button>
+    <div id="start-screen">
+        <h1>🐍 Realistic Snake Game</h1>
+        <button onclick="startGame()">▶ Play</button>
+        <button onclick="restartGame()">🔁 Restart</button>
     </div>
-    <audio id="eatSound" src="https://freesound.org/data/previews/404/404415_5121236-lq.mp3"></audio>
-    <audio id="gameOverSound" src="https://freesound.org/data/previews/178/178186_2859975-lq.mp3"></audio>
+
+    <div id="game-container" style="display:none;">
+        <canvas id="gameCanvas" width="600" height="600"></canvas>
+        <div id="score">Score: 0</div>
+        <button id="restartBtn" onclick="restartGame()">🔁 Restart</button>
+    </div>
+
     <script src="snake.js"></script>
 </body>
 </html>
