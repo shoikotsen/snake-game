@@ -1,6 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+// 🟣 Set grid size for snake and food (change this if needed)
+const gridSize = 40;
+
 const snakeHeadImg = new Image();
 snakeHeadImg.src = "assets/snake-head.png";
 const snakeBodyImg = new Image();
@@ -14,7 +17,7 @@ function startGame() {
     document.getElementById("start-screen").style.display = "none";
     document.getElementById("game-container").style.display = "flex";
 
-    snake = [{ x: 300, y: 300 }];
+    snake = [{ x: gridSize * 7, y: gridSize * 7 }]; // Start aligned to grid
     food = getRandomFoodPosition();
     direction = "RIGHT";
     score = 0;
@@ -27,10 +30,10 @@ function updateGame() {
     if (isGameOver) return;
 
     let head = { ...snake[0] };
-    if (direction === "UP") head.y -= 40;
-    if (direction === "DOWN") head.y += 40;
-    if (direction === "LEFT") head.x -= 40;
-    if (direction === "RIGHT") head.x += 40;
+    if (direction === "UP") head.y -= gridSize;
+    if (direction === "DOWN") head.y += gridSize;
+    if (direction === "LEFT") head.x -= gridSize;
+    if (direction === "RIGHT") head.x += gridSize;
 
     snake.unshift(head);
 
@@ -58,21 +61,20 @@ function draw() {
     snake.forEach((seg, idx) => {
         try {
             if (idx === 0) {
-                ctx.drawImage(snakeHeadImg, seg.x, seg.y, 40, 40);
+                ctx.drawImage(snakeHeadImg, seg.x, seg.y, gridSize, gridSize);
             } else {
-                ctx.drawImage(snakeBodyImg, seg.x, seg.y, 40, 40);
+                ctx.drawImage(snakeBodyImg, seg.x, seg.y, gridSize, gridSize);
             }
         } catch (e) {
-            // fallback color if images fail
             ctx.fillStyle = idx === 0 ? "#4CAF50" : "#8BC34A";
-            ctx.fillRect(seg.x, seg.y, 40, 40);
+            ctx.fillRect(seg.x, seg.y, gridSize, gridSize);
         }
     });
     try {
-        ctx.drawImage(mouseImg, food.x, food.y, 40, 40);
+        ctx.drawImage(mouseImg, food.x, food.y, gridSize, gridSize);
     } catch (e) {
         ctx.fillStyle = "#FF5252";
-        ctx.fillRect(food.x, food.y, 40, 40);
+        ctx.fillRect(food.x, food.y, gridSize, gridSize);
     }
 }
 
@@ -94,7 +96,9 @@ document.addEventListener("keydown", e => {
 });
 
 function getRandomFoodPosition() {
-    const x = Math.floor(Math.random() * (canvas.width / 40)) * 40;
-    const y = Math.floor(Math.random() * (canvas.height / 40)) * 40;
+    const maxX = Math.floor(canvas.width / gridSize);
+    const maxY = Math.floor(canvas.height / gridSize);
+    const x = Math.floor(Math.random() * maxX) * gridSize;
+    const y = Math.floor(Math.random() * maxY) * gridSize;
     return { x, y };
 }
